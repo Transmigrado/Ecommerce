@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import { Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CircularProgress from '@mui/material/CircularProgress';
+import { errorBoundary } from "./helpers/errorBoundary";
 
-function App() {
+// lazy loading
+const Home = lazy(() => import("./pages/Home"));
+//const Header = lazy(() => import("./components/nav/Header"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense
+      fallback={
+        <div className="col text-center p-5">
+          <CircularProgress />
+        </div>
+      }
+    >
+      {/*<Header />*/}
+      <ToastContainer />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
-}
+};
 
-export default App;
+// pattern design react: HOC
+export default errorBoundary(App);

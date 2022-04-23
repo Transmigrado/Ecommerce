@@ -5,10 +5,12 @@ import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from '@mui/material/CircularProgress';
 import { errorBoundary } from "./helpers/errorBoundary";
 
+
 // lazy loading
 const Home = lazy(() => import("./pages/Home"));
 //const Header = lazy(() => import("./components/nav/Header"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Cart = lazy(() => import("./pages/Cart"));
 
 const App = () => {
   return (
@@ -23,6 +25,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/cart" component={Cart} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

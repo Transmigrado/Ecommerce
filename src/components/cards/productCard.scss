@@ -1,0 +1,29 @@
+.price-contender {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.product-card {
+    background-color:#d8d8d8
+}
+.final-price {
+    font-weight: 500;
+}
+.add-to-cart-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 100%;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+    background: #000000;
+    color: #fff;
+}
+.image {
+    padding-top: 2rem;
+}
+

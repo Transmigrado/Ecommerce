@@ -11,6 +11,7 @@ const Home = lazy(() => import("./pages/Home"));
 //const Header = lazy(() => import("./components/nav/Header"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

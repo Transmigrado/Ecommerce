@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 //$WinREAgentimport { showAverage } from "../../functions/rating";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
-import productCard from './productCard.scss'
+import './productCard.scss'
 
 const ProductCard = ({ product }) => {
 
@@ -38,7 +38,6 @@ const ProductCard = ({ product }) => {
   let finalPrice = multiple(price);
   product.finalPrice = finalPrice;
 
-  console.log(product)
 
   const handleAddToCart = () => {
 

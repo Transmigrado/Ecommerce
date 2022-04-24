@@ -101,7 +101,7 @@ const ProductCardInCheckout = ({ p }) => {
   };
 
     return (
-        <Card sx={{ minWidth: 1000, maxWidth: 1000 }}>
+        <Card>
             <TableContainer component={Paper}>
                 <Table size="small" aria-label="a dense table">
                     <TableHead>
@@ -124,7 +124,7 @@ const ProductCardInCheckout = ({ p }) => {
                             <CardMedia
                                 className="image"
                                 component="img"
-                                height="150"
+                                height="100"
                                 sx={{objectFit: 'contain'}}
                                 image={p.image}
                                 alt={p.name}

@@ -1,19 +1,13 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
-//import { Card, Tooltip } from "antd";
-//import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-//import laptop from "../../image/laptop.png";
 import { Link } from "react-router-dom";
-//$WinREAgentimport { showAverage } from "../../functions/rating";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
 import './productCard.scss'
@@ -23,6 +17,10 @@ const ProductCard = ({ product }) => {
   const [tooltip, setTooltip] = useState("Click to add");
 
   const dispatch = useDispatch();
+  
+  let history = useHistory();
+
+  const  handleClickProduct = (id) =>  history.push(`/product-details/${id}`)
 
   const randomPrice = (min=1000, max=100000) => {
       let price = Math.random() * (max - min) + min;
@@ -55,6 +53,7 @@ const ProductCard = ({ product }) => {
       });
       // remove duplicates
       let unique = _.uniqWith(cart,_.isEqual);
+      console.log(unique)
       // save to local storage
       // console.log('unique', unique)
       localStorage.setItem("cart", JSON.stringify(unique));
@@ -75,11 +74,12 @@ const ProductCard = ({ product }) => {
   };
 
   // destructure
-  const { image, name, gameSeries } = product;
+  const { image, name, gameSeries, tail } = product;
  
   return (
-    <Card className="product-card" >
+    <Card className="product-card">
       <CardMedia
+        onClick={()=>handleClickProduct(tail)}
         className="image"
         component="img"
         height="300"

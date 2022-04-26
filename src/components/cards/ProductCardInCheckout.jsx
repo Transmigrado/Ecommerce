@@ -1,6 +1,4 @@
 import React from "react";
-import ModalImage from "react-modal-image";
-//import laptop from "../../images/laptop.png";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Card from '@mui/material/Card';
@@ -18,18 +16,23 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
 
 const ProductCardInCheckout = ({ p }) => {
- 
+   
     const colors = ["Black", "Brown", "Silver", "White", "Blue"];
+
     let dispatch = useDispatch();
 
     const handleColorChange = (e) => {
+
         let cart = [];
+
         if (typeof window !== "undefined") {
+
             if (localStorage.getItem("cart")) {
                 cart = JSON.parse(localStorage.getItem("cart"));
             }
 
             cart.map((product, i) => {
+                console.log("propudct",product)
                 if (product._id === p._id) {
                     cart[i].color = e.target.value;
                 }
@@ -62,7 +65,8 @@ const ProductCardInCheckout = ({ p }) => {
             }
 
             cart.map((product, i) => {
-                if (product._id === p._id) {
+                console.log("product",product)
+                if (product.tail === p.tail) {
                     cart[i].count = count;
                 }
                 return cart;

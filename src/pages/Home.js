@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import LoadingCard from "../components/cards/LoadingCard";
 import ProductCard from "../components/cards/ProductCard";
 import { getProducts } from "../functions/product";
@@ -19,25 +20,32 @@ const Home = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        loadAllProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    let dispatch = useDispatch();
+    const { product } = useSelector((state) => ({ ...state }));
 
+    useEffect(() => {
+        setLoading(true);
+        if(product){
+            setProducts(product.data.amiibo);
+            setLoading(false);
+        }else{
+            setLoading(false);
+            loadAllProducts();
+        }
+           
+    },[]);
+    
     const loadAllProducts = () => {
         setLoading(true);
-        // sort, order, limit
         getProducts().then((res) => {
             setProducts(res.data.amiibo);
+            dispatch({
+                type: "ADD_PRODUCTS",
+                payload: res,
+              });
             setLoading(false);
         });
     };
-
-    useEffect(() =>{
-        products?.map((res) => {
-            console.log(res)
-        })
-    },[products])
 
     return (
         <Card className="cardroot" sx={maincontainer}>

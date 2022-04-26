@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-/*import {
-  getUserCart,
-  emptyUserCart,
-  saveUserAddress,
-  applyCoupon,
-  createCashOrderForUser,
-} from "../functions/user";*/
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -22,16 +15,17 @@ const Checkout = ({ history }) => {
   const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
-  const { user, COD } = useSelector((state) => ({ ...state }));
+  const {  user, cart, COD } = useSelector((state) => ({ ...state }));
   const couponTrueOrFalse = useSelector((state) => state.coupon);
 
-/*  useEffect(() => {
-    getUserCart(user.token).then((res) => {
-      console.log("user cart res", JSON.stringify(res.data, null, 4));
-      setProducts(res.data.products);
-      setTotal(res.data.cartTotal);
-    });
-  }, [user.token]);*/
+  useEffect(() =>{
+    if(cart){
+      setProducts(cart)
+     
+      let total = cart.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
+      setTotal(total)
+    }
+  },[cart])
 
   const emptyCart = () => {
     // remove from local storage
@@ -100,8 +94,8 @@ const Checkout = ({ history }) => {
     products.map((p, i) => (
       <div key={i}>
         <p>
-          {p.product.title} ({p.color}) x {p.count} ={" "}
-          {p.product.price * p.count}
+          {p.name} ({p.color}) x {p.count} ={" "}
+          {p.finalPrice * p.count}
         </p>
       </div>
     ));

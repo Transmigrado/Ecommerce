@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import ProductCardInCheckout from "../../components/cards/ProductCardInCheckout";
 import Card from '@mui/material/Card';
 import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
@@ -17,26 +17,8 @@ const Cart = ({ history }) => {
     const getTotal = () =>
         cart.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
 
-    const thenEndpointAction = (res) => {
-        console.log("CART POST RES", res);
-        return res.data.ok && history.push("/checkout");
-    };
-
-    const catchEndpointAction = (err) => console.log("cart save err", err);
-
-    const saveOrderToDb = () => {
-        /*userCart(cart, user.token)
-        .then((res) => thenEndpointAction(res))
-        .catch((err) => catchEndpointAction(err));*/
-    };
-
-    const saveCashOrderToDb = () => {
-        /*dispatch({ type: "COD", payload: true });
-        userCart(cart, user.token)
-            .then((res) => thenEndpointAction(res))
-            .catch((err) => catchEndpointAction(err));*/
-    };
-
+    const thenEndpointAction = () => history.push("/checkout");
+  
     const showCartItems = () => (
         cart.map((p) => (
             <Box paddingTop={5}>
@@ -73,36 +55,18 @@ const Cart = ({ history }) => {
                             <hr />
                             Total: <b>${getTotal()}</b>
                             <hr />
-                            {user ? (
+                          
                             <>
                                 <button
-                                    onClick={saveOrderToDb}
+                                    onClick={thenEndpointAction}
                                     className="btn btn-sm btn-primary mt-2"
                                     disabled={!cart.length}
                                 >
                                     Proceed to Checkout
                                 </button>
                                 <br />
-                                <button
-                                    onClick={saveCashOrderToDb}
-                                    className="btn btn-sm btn-warning mt-2"
-                                    disabled={!cart.length}
-                                >
-                                    Pay Cash on Delivery
-                                </button>
                             </>
-                            ) : (
-                            <button className="btn btn-sm btn-primary mt-2">
-                                <Link
-                                    to={{
-                                        pathname: "/login",
-                                        state: { from: "cart" },
-                                    }}
-                                >
-                                    Login to Checkout
-                                </Link>
-                            </button>
-                            )}
+
                         </Card>
                     </Grid>    
                 </Grid>

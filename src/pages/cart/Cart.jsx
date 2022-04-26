@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCardInCheckout from "../../components/cards/ProductCardInCheckout";
 import Card from '@mui/material/Card';
-import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 //import { userCart } from "../functions/user";
 import './cart.scss'
@@ -33,7 +34,7 @@ const Cart = ({ history }) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={12} lg={8}>
                         <Card className="cart-items">
-                            <h4>Cart / {cart.length} Product</h4>
+                            <h4>Productos en el carro / {cart.length}</h4>
 
                             {!cart.length ? (
                                 <p> No products in cart. <Link to="/shop">Continue Shopping.</Link> </p>
@@ -57,13 +58,14 @@ const Cart = ({ history }) => {
                             <hr />
                           
                             <>
-                                <button
-                                    onClick={thenEndpointAction}
+                                <Button
+                                    variant="contained"
                                     className="btn btn-sm btn-primary mt-2"
                                     disabled={!cart.length}
+                                    onClick={thenEndpointAction}
                                 >
-                                    Proceed to Checkout
-                                </button>
+                                    Ir a pagar
+                                </Button>
                                 <br />
                             </>
 

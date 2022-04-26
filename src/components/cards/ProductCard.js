@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
       return Math.ceil(price / 10) * 10
   }
 
-  let finalPrice = 1000;
+  let finalPrice = multiple(price);
   product.finalPrice = finalPrice;
 
 

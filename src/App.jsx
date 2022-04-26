@@ -11,7 +11,7 @@ const Home = lazy(() => import("./pages/Home"));
 //const Header = lazy(() => import("./components/nav/Header"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
-const Checkout = lazy(() => import("./pages/Checkout"));
+const Checkout = lazy(() => import("./pages/checkout/Checkout"));
 const ProductDetails = lazy(() => import("./pages/product-details/ProductDetails"));
 const Payment = lazy(() => import("./pages/payment/Payment"));
 

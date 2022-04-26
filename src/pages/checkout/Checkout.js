@@ -4,6 +4,10 @@ import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import "./checkout.scss"
+
 const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -150,9 +154,11 @@ const Checkout = ({ history }) => {
   };
 
   return (
-    <div className="row">
-      <div className="col-md-6">
-        <h4>Delivery Address</h4>
+    <Card className="checkout-container">
+      <Grid container spacing={4} justifyContent='center' width='90%'>
+      <Grid item xs={12} sm={12} md={12} lg={6}>
+        <h4>Dirección de entrega</h4>
+        <hr />
         <br />
         <br />
         {showAddress()}
@@ -162,10 +168,10 @@ const Checkout = ({ history }) => {
         {showApplyCoupon()}
         <br />
         {discountError && <p className="bg-danger p-2">{discountError}</p>}
-      </div>
+      </Grid>
 
-      <div className="col-md-6">
-        <h4>Order Summary</h4>
+      <Grid item xs={12} sm={12} md={12} lg={6}>
+        <h4>Resumen del pedido</h4>
         <hr />
         <p>Products {products.length}</p>
         <hr />
@@ -210,8 +216,9 @@ const Checkout = ({ history }) => {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Card>
   );
 };
 

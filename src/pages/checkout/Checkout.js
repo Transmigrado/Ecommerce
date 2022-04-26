@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import "./checkout.scss"
 
 const Checkout = ({ history }) => {
@@ -52,13 +53,8 @@ const Checkout = ({ history }) => {
   };
 
   const saveAddressToDb = () => {
-    // console.log(address);
-    /*saveUserAddress(user.token, address).then((res) => {
-      if (res.data.ok) {
-        setAddressSaved(true);
-        toast.success("Address saved");
-      }
-    });*/
+   toast.success("Address saved");
+
   };
 
   const applyDiscountCoupon = () => {
@@ -88,9 +84,9 @@ const Checkout = ({ history }) => {
   const showAddress = () => (
     <>
       <ReactQuill theme="snow" value={address} onChange={setAddress} />
-      <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
+      <Button  variant="contained" className="btn btn-primary mt-2" onClick={saveAddressToDb}>
         Save
-      </button>
+      </Button>
     </>
   );
 
@@ -154,6 +150,7 @@ const Checkout = ({ history }) => {
   };
 
   return (
+    <Box className="main-payment-container">
     <Card className="checkout-container">
       <Grid container spacing={4} justifyContent='center' width='90%'>
       <Grid item xs={12} sm={12} md={12} lg={6}>
@@ -188,37 +185,41 @@ const Checkout = ({ history }) => {
         <div className="row">
           <div className="col-md-6">
             {COD ? (
-              <button
+              <Button
+                variant="contained"
                 className="btn btn-primary"
                 disabled={!addressSaved || !products.length}
                 onClick={createCashOrder}
               >
                 Place Order
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button
+                variant="contained"
                 className="btn btn-primary"
-                disabled={!addressSaved || !products.length}
+                //disabled={!addressSaved || !products.length}
                 onClick={() => history.push("/payment")}
               >
                 Place Order
-              </button>
+              </Button>
             )}
           </div>
 
           <div className="col-md-6">
-            <button
+            <Button
+              variant="contained"
               disabled={!products.length}
               onClick={emptyCart}
               className="btn btn-primary"
             >
               Empty Cart
-            </button>
+            </Button>
           </div>
         </div>
         </Grid>
       </Grid>
     </Card>
+    </Box> 
   );
 };
 

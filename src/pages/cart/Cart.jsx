@@ -50,7 +50,7 @@ const Cart = ({ history }) => {
                             <p>Products</p>
                             {cart.map((c, i) => (
                                 <Box key={i}>
-                                    <p>{c.title} x {c.count} = ${c.finalPrice * c.count}</p>
+                                    <p>{c.name} x {c.count} = ${c.finalPrice * c.count}</p>
                                 </Box>
                             ))}
                             <hr />

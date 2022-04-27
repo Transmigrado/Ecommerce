@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CardMedia from '@mui/material/CardMedia';
@@ -13,13 +12,13 @@ import Button from '@mui/material/Button';
 const StripeCheckout = () => {
 
     const dispatch = useDispatch();
-    const { cart, coupon } = useSelector((state) => ({ ...state }));
-
+    const { checkout } = useSelector((state) => ({ ...state }));
+    console.log("checkout",checkout)
     const [succeeded, setSucceeded] = useState(false);
     const [processing, setProcessing] = useState("");
  
     const getTotal = () =>
-        cart.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
+    checkout[0].products.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
         
     const handleSubmit = () => {
       
@@ -52,9 +51,14 @@ const StripeCheckout = () => {
         <Grid item xs={10} sm={10} md={8} lg={5}>
             <h4>Amiibo</h4>
             <hr />
+            <p>Nombre: {checkout[0].comprador.name} </p>
+            <p>Teléfono: {checkout[0].comprador.phone} </p>
+            <p>Correo: {checkout[0].comprador.email} </p>
+            <p>Dirección: {checkout[0].comprador.address} </p>
+            <hr />
             <p>Products</p>
 
-            {cart.map((c, i) => (
+            {checkout[0].products.map((c, i) => (
                 <Box key={i}>
                     <p>{c.name} x {c.count} = ${c.finalPrice * c.count}</p>
                 </Box>

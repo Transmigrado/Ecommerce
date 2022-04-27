@@ -3,14 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { validateEmail } from '../../functions/validateEmail'
 import { toast } from "react-toastify";
 import _ from "lodash";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-
 import "./checkout.scss"
 
 const defaultValue = () => {
@@ -27,7 +25,6 @@ const Checkout = ({ history }) => {
     const [ total, setTotal ] = useState(0);
     const [ formData, setFormData ] = useState(defaultValue())
     const [ formError, setFormError ] = useState({})
-    const [ tooltip, setTooltip] = useState("Click to add");
 
     const dispatch = useDispatch();
     const { cart } = useSelector((state) => ({ ...state }));
@@ -39,6 +36,8 @@ const Checkout = ({ history }) => {
     const [ email, setEmail ] = useState()
     const [ address, setAddress] = useState()
    
+    const thenEndpointAction = () => history.push("/payment");
+
     useEffect(() =>{
         if(cart){
             setProducts(cart)
@@ -48,24 +47,21 @@ const Checkout = ({ history }) => {
     },[cart])
 
     useEffect(() => {
-        setName(checkout[0].comprador.name)
-        setPhone(checkout[0].comprador.phone)
-        setEmail(checkout[0].comprador.email)
-        setAddress(checkout[0].comprador.address)
+        setName(checkout[0]?.comprador?.name)
+        setPhone(checkout[0]?.comprador?.phone)
+        setEmail(checkout[0]?.comprador?.email)
+        setAddress(checkout[0]?.comprador?.address)
 
         setFormData({
             ... formData, 
-            name: checkout[0].comprador.name, 
-            phone: checkout[0].comprador.phone,
-            email: checkout[0].comprador.email,
-            address: checkout[0].comprador.address
+            name: checkout[0]?.comprador?.name, 
+            phone: checkout[0]?.comprador?.phone,
+            email: checkout[0]?.comprador?.email,
+            address: checkout[0]?.comprador?.address
         })
-    
         setChecking(false)
-
     },[checkout])
     
-    console.log(formData)
     const emptyCart = () => {
         // remove from local storage
         if (typeof window !== "undefined") {
@@ -99,30 +95,39 @@ const Checkout = ({ history }) => {
                 comprador:formData,
                 products: products
             }
-            
             let checkout = [];
+
             if (typeof window !== "undefined") {
-            if (localStorage.getItem("checkout")) {
-                checkout = JSON.parse(localStorage.getItem("checkout"));
-            }
-            checkout.push({
-                ...checkoutInfo,
-                count: 1,
-            });
+                if (localStorage.getItem("checkout")) {
+                    checkout = JSON.parse(localStorage.getItem("checkout"));
+                }
+                if(checkout.length === 0){
+                    checkout.push({
+                        ...checkoutInfo,
+                        count: 1,
+                    });
+                } else {
+                    products.map((res) => {
+                        let products = checkout[0].products;
+                        let exists = products.filter((response) => response.tail === res.tail)
+                        if(exists.length === 0){
+                            checkout[0].products.push({
+                                ...res,
+                                count: 1,
+                            })
+                        }
+                    })
+                }
             
-            let unique = _.uniqWith(checkout,_.isEqual);
-            localStorage.setItem("checkout", JSON.stringify(unique));
-            setTooltip("Added");
-            
-            dispatch({
-                type: "ADD_TO_CHECKOUT",
-                payload: unique,
-            });
-            
-            dispatch({
-                type: "SET_VISIBLE",
-                payload: true,
-            });
+                let unique = _.uniqWith(checkout,_.isEqual);
+        
+                localStorage.setItem("checkout", JSON.stringify(unique));
+                
+                dispatch({
+                    type: "ADD_TO_CHECKOUT",
+                    payload: unique,
+                });
+                thenEndpointAction()
             }
             
         }

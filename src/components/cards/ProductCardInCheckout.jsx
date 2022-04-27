@@ -14,14 +14,12 @@ import CardMedia from '@mui/material/CardMedia';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
-import  './product-card-Checkout.scss'
 
 const ProductCardInCheckout = ({ p }) => {
 
     let dispatch = useDispatch();
 
     const handleQuantityChange = (e) => {
-    
         let count = e.target.value < 1 ? 1 : e.target.value;
         if (count > p.quantity) {
             toast.error(`Max available quantity: ${p.quantity}`);

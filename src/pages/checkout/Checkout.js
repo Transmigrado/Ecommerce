@@ -1,226 +1,236 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { validateEmail } from '../../functions/validateEmail'
 import { toast } from "react-toastify";
+import _ from "lodash";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
 import "./checkout.scss"
 
+const defaultValue = () => {
+    return {
+        name:'',
+        phone:'',
+        email:'',
+        address: ''
+    }
+}
+
 const Checkout = ({ history }) => {
-  const [products, setProducts] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [address, setAddress] = useState("");
-  const [addressSaved, setAddressSaved] = useState(false);
-  const [coupon, setCoupon] = useState("");
-  // discount price
-  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
-  const [discountError, setDiscountError] = useState("");
+    const [ products, setProducts ] = useState([]);
+    const [ total, setTotal ] = useState(0);
+    const [ formData, setFormData ] = useState(defaultValue())
+    const [ formError, setFormError ] = useState({})
+    const [ tooltip, setTooltip] = useState("Click to add");
 
-  const dispatch = useDispatch();
-  const {  user, cart, COD } = useSelector((state) => ({ ...state }));
-  const couponTrueOrFalse = useSelector((state) => state.coupon);
+    const dispatch = useDispatch();
+    const { cart } = useSelector((state) => ({ ...state }));
+    const { checkout } = useSelector((state) => ({ ...state }));
+    const [ checking, setChecking ] = useState(true)
 
-  useEffect(() =>{
-    if(cart){
-      setProducts(cart)
-     
-      let total = cart.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
-      setTotal(total)
+    const [ name, setName] = useState()
+    const [ phone, setPhone ] = useState()
+    const [ email, setEmail ] = useState()
+    const [ address, setAddress] = useState()
+   
+    useEffect(() =>{
+        if(cart){
+            setProducts(cart)
+            let total = cart.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
+            setTotal(total)
+        }
+    },[cart])
+
+    useEffect(() => {
+        setName(checkout[0].comprador.name)
+        setPhone(checkout[0].comprador.phone)
+        setEmail(checkout[0].comprador.email)
+        setAddress(checkout[0].comprador.address)
+
+        setFormData({
+            ... formData, 
+            name: checkout[0].comprador.name, 
+            phone: checkout[0].comprador.phone,
+            email: checkout[0].comprador.email,
+            address: checkout[0].comprador.address
+        })
+    
+        setChecking(false)
+
+    },[checkout])
+    
+    console.log(formData)
+    const emptyCart = () => {
+        // remove from local storage
+        if (typeof window !== "undefined") {
+            localStorage.removeItem("cart");
+            localStorage.removeItem("checkout");
+        }
+        // remove from redux
+        dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+        });
+        dispatch({
+            type: "ADD_TO_CHECKOUT",
+            payload: [],
+        });
+
+    };
+
+    const handleOrder = () => {
+        let error = {}
+        if(!formData.name || !formData.phone || !formData.email || !formData.address){
+            if(!formData.name) error.name = true;
+            if(!formData.phone) error.phone = true;
+            if(!formData.email) error.email = true;
+            if(!formData.address) error.address = true;
+        } else if (!validateEmail(formData.email)) {
+            error.email = true;
+        } else {
+
+            let checkoutInfo = {
+                comprador:formData,
+                products: products
+            }
+            
+            let checkout = [];
+            if (typeof window !== "undefined") {
+            if (localStorage.getItem("checkout")) {
+                checkout = JSON.parse(localStorage.getItem("checkout"));
+            }
+            checkout.push({
+                ...checkoutInfo,
+                count: 1,
+            });
+            
+            let unique = _.uniqWith(checkout,_.isEqual);
+            localStorage.setItem("checkout", JSON.stringify(unique));
+            setTooltip("Added");
+            
+            dispatch({
+                type: "ADD_TO_CHECKOUT",
+                payload: unique,
+            });
+            
+            dispatch({
+                type: "SET_VISIBLE",
+                payload: true,
+            });
+            }
+            
+        }
+            setFormError(error)
     }
-  },[cart])
 
-  const emptyCart = () => {
-    // remove from local storage
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("cart");
-    }
-    // remove from redux
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: [],
-    });
-    // remove from backend
-    /*emptyUserCart(user.token).then((res) => {
-      setProducts([]);
-      setTotal(0);
-      setTotalAfterDiscount(0);
-      setCoupon("");
-      toast.success("Cart is emapty. Contniue shopping.");
-    });*/
-  };
+    const showProductSummary = () =>
+        products.map((p, i) => (
+            <Box key={i}>
+                <p>
+                    {p.name} ({p.color}) x {p.count} ={" "}
+                    {p.finalPrice * p.count}
+                </p>
+            </Box>
+        ));
 
-  const saveAddressToDb = () => {
-   toast.success("Address saved");
+    if(checking) return null
+    return (
+        <Box className="main-payment-container">
+            <Card className="checkout-container">
+                
+                <Grid container spacing={4} padding={5} >
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <h4>Datos del comprador</h4>
+                        <hr />
+                    <Box sx={{'& > :not(style)': {  width: '100%' },}}>
+                        <TextField
+                            defaultValue={ name ? name : ""}
+                            error={formError.name ? true : false } 
+                            id="standard-basic" 
+                            label="Nombre" 
+                            variant="standard" 
+                            onChange={(e) => setFormData({... formData, name: e.target.value})}
+                        />
+                        <TextField
+                            defaultValue={ phone ? phone : ""}
+                            error={formError.phone ? true : false }
+                            id="standard-basic" 
+                            label="Teléfono" 
+                            variant="standard" 
+                            onChange={(e) => setFormData({... formData, phone: e.target.value})}
+                        />
 
-  };
+                        <TextField
+                            defaultValue={ email ? email : ""}
+                            error={formError.email ? true : false } 
+                            id="standard-basic" 
+                            label="Correo" 
+                            variant="standard" 
+                            onChange={(e) => setFormData({... formData, email: e.target.value})}
+                        />
 
-  const applyDiscountCoupon = () => {
-    /*console.log("send coupon to backend", coupon);
-    applyCoupon(user.token, coupon).then((res) => {
-      console.log("RES ON COUPON APPLIED", res.data);
-      if (res.data) {
-        setTotalAfterDiscount(res.data);
-        // update redux coupon applied true/false
-        dispatch({
-          type: "COUPON_APPLIED",
-          payload: true,
-        });
-      }
-      // error
-      if (res.data.err) {
-        setDiscountError(res.data.err);
-        // update redux coupon applied true/false
-        dispatch({
-          type: "COUPON_APPLIED",
-          payload: false,
-        });
-      }
-    });*/
-  };
+                        <TextField
+                            defaultValue={ address ? address : ""}
+                            error={formError.address ? true : false } 
+                            id="standard-basic" 
+                            label="Dirección de entrega" 
+                            variant="standard" 
+                            onChange={(e) => setFormData({... formData, address: e.target.value})}
+                        />
+                       
+                    </Box>
+                       
+                    <br/>
+                    <br/>
+                    <br/>
+                     
+                      
+                   
+                        <h4>Resumen del pedido</h4>
+                        <hr />
+                        <p>Products {products.length}</p>
+                        <hr />
+                        {showProductSummary()}
+                        <hr />
+        
+                        <p>Cart Total: {total}</p>
 
-  const showAddress = () => (
-    <>
-      <ReactQuill theme="snow" value={address} onChange={setAddress} />
-      <Button  variant="contained" className="btn btn-primary mt-2" onClick={saveAddressToDb}>
-        Save
-      </Button>
-    </>
-  );
 
-  const showProductSummary = () =>
-    products.map((p, i) => (
-      <div key={i}>
-        <p>
-          {p.name} ({p.color}) x {p.count} ={" "}
-          {p.finalPrice * p.count}
-        </p>
-      </div>
-    ));
+                        <Box className="btn-order-summary">
+                            <Box className="box-btn-order">
+                                <Button
+                                    onClick={ () => handleOrder()}
+                                    variant="contained"
+                                    className="btn-order"
+                                    disabled={!products.length}
+                                    //onClick={() => history.push("/payment")}
+                                >
+                                    Realizar pedido
+                                </Button>
+                            </Box>
 
-  const showApplyCoupon = () => (
-    <>
-      <input
-        onChange={(e) => {
-          setCoupon(e.target.value);
-          setDiscountError("");
-        }}
-        value={coupon}
-        type="text"
-        className="form-control"
-      />
-      <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
-        Apply
-      </button>
-    </>
-  );
-
-  const createCashOrder = () => {
-    //createCashOrderForUser(user.token, COD, couponTrueOrFalse).then((res) => {
-      //console.log("USER CASH ORDER CREATED RES ", res);
-      // empty cart form redux, local Storage, reset coupon, reset COD, redirect
-      /*if (res.data.ok) {
-        // empty local storage
-        if (typeof window !== "undefined") localStorage.removeItem("cart");
-        // empty redux cart
-        dispatch({
-          type: "ADD_TO_CART",
-          payload: [],
-        });
-        // empty redux coupon
-        dispatch({
-          type: "COUPON_APPLIED",
-          payload: false,
-        });
-        // empty redux COD
-        dispatch({
-          type: "COD",
-          payload: false,
-        });
-        // mepty cart from backend
-        //emptyUserCart(user.token);
-        // redirect
-        setTimeout(() => {
-          history.push("/user/history");
-        }, 1000);
-      }
-    //});*/
-  };
-
-  return (
-    <Box className="main-payment-container">
-    <Card className="checkout-container">
-      <Grid container spacing={4} justifyContent='center' width='90%'>
-      <Grid item xs={12} sm={12} md={12} lg={6}>
-        <h4>Dirección de entrega</h4>
-        <hr />
-        <br />
-        <br />
-        {showAddress()}
-        <hr />
-        <h4>Got Coupon?</h4>
-        <br />
-        {showApplyCoupon()}
-        <br />
-        {discountError && <p className="bg-danger p-2">{discountError}</p>}
-      </Grid>
-
-      <Grid item xs={12} sm={12} md={12} lg={6}>
-        <h4>Resumen del pedido</h4>
-        <hr />
-        <p>Products {products.length}</p>
-        <hr />
-        {showProductSummary()}
-        <hr />
-        <p>Cart Total: {total}</p>
-
-        {totalAfterDiscount > 0 && (
-          <p className="bg-success p-2">
-            Discount Applied: Total Payable: ${totalAfterDiscount}
-          </p>
-        )}
-
-        <div className="row">
-          <div className="col-md-6">
-            {COD ? (
-              <Button
-                variant="contained"
-                className="btn btn-primary"
-                disabled={!addressSaved || !products.length}
-                onClick={createCashOrder}
-              >
-                Place Order
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                className="btn btn-primary"
-                //disabled={!addressSaved || !products.length}
-                onClick={() => history.push("/payment")}
-              >
-                Place Order
-              </Button>
-            )}
-          </div>
-
-          <div className="col-md-6">
-            <Button
-              variant="contained"
-              disabled={!products.length}
-              onClick={emptyCart}
-              className="btn btn-primary"
-            >
-              Empty Cart
-            </Button>
-          </div>
-        </div>
-        </Grid>
-      </Grid>
-    </Card>
-    </Box> 
-  );
+                            <Box className="btn-empty-cart">
+                                <Button
+                                    variant="contained"
+                                    disabled={!products.length}
+                                    onClick={emptyCart}
+                                    className="btn-empty-cart"
+                                >
+                                    Vaciar carro
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Grid> 
+                </Grid>
+            </Card>
+        </Box> 
+    );
 };
 
 export default Checkout;

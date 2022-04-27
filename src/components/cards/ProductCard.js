@@ -53,7 +53,7 @@ const ProductCard = ({ product }) => {
       });
       // remove duplicates
       let unique = _.uniqWith(cart,_.isEqual);
-      console.log(unique)
+   
       // save to local storage
       // console.log('unique', unique)
       localStorage.setItem("cart", JSON.stringify(unique));

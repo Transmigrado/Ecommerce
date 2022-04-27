@@ -35,7 +35,6 @@ const ProductCardInCheckout = ({ p }) => {
             }
 
             cart.map((product, i) => {
-                console.log("product",product)
                 if (product.tail === p.tail) {
                     cart[i].count = count;
                 }

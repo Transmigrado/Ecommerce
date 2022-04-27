@@ -7,7 +7,7 @@ const Layout = ({children}) =>{
     return(
         <>
             <Header />
-                <Box paddingTop={10}>
+                <Box paddingTop={10} minHeight='90vh' >
                     {children}
                 </Box>
             <Footer />

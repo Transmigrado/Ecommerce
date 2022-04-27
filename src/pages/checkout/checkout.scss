@@ -1,10 +1,21 @@
 .main-payment-container {
     display: flex;
     justify-content: center;
+    padding-top: 4rem;
 }
 .checkout-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    min-width: 50%;
+    padding-bottom: 2rem;
+}
+.btn-show-address {
+    margin-top: 1rem;
+}
+.btn-order-summary {
+    display: flex;
+}
+.box-btn-order {
+    margin-right: 1rem;
 }

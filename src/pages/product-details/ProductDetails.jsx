@@ -22,7 +22,6 @@ const ProductDetails = () => {
             let info = res.data.amiibo;
             info.finalPrice =8000
             setDetails(info)
-            console.log(info)
         })
     },[id])
 

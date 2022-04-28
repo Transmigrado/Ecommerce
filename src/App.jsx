@@ -7,13 +7,14 @@ import { errorBoundary } from "./helpers/errorBoundary";
 import Layout from "./layout/Layout";
 
 // lazy loading
-const Home = lazy(() => import("./pages/Home"));
+const Home = lazy(() => import("./pages/home/Home"));
 //const Header = lazy(() => import("./components/nav/Header"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
 const Checkout = lazy(() => import("./pages/checkout/Checkout"));
 const ProductDetails = lazy(() => import("./pages/product-details/ProductDetails"));
 const Payment = lazy(() => import("./pages/payment/Payment"));
+const History = lazy(() => import("./pages/History"));
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/product-details/:id" component={ProductDetails} />
             <Route exact path="/payment" component={Payment} />
+            <Route exact path="/history" component={History} />
             <Route component={NotFound} />
         </Switch>
       </Layout> 

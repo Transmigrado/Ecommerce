@@ -1,19 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ProductCardInCheckout from "../../components/cards/ProductCardInCheckout";
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-
-//import { userCart } from "../functions/user";
 import './cart.scss'
 
 const Cart = ({ history }) => {
 
-    const dispatch = useDispatch();
-    const { cart, user } = useSelector((state) => ({ ...state }));
+    const { cart } = useSelector((state) => ({ ...state }));
 
     const getTotal = () =>
         cart.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
@@ -26,7 +23,7 @@ const Cart = ({ history }) => {
                 <ProductCardInCheckout key={p._id} p={p} />
             </Box>
         ))
-    );
+    )
 
     return (
         <Box className="box-container">
@@ -57,18 +54,15 @@ const Cart = ({ history }) => {
                             Total: <b>${getTotal()}</b>
                             <hr />
                           
-                            <>
-                                <Button
-                                    variant="contained"
-                                    className="btn btn-sm btn-primary mt-2"
-                                    disabled={!cart.length}
-                                    onClick={thenEndpointAction}
-                                >
-                                    Ir a pagar
-                                </Button>
-                                <br />
-                            </>
-
+                            <Button
+                                variant="contained"
+                                className="btn btn-sm btn-primary mt-2"
+                                disabled={!cart.length}
+                                onClick={thenEndpointAction}
+                            >
+                                Ir a pagar
+                            </Button>
+                            <br />
                         </Card>
                     </Grid>    
                 </Grid>

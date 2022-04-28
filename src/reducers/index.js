@@ -1,16 +1,14 @@
 import { combineReducers } from "redux";
-import { searchReducer } from "./searchReducer";
-import { headerReducer } from "./headerReducer";
 import { cartReducer } from "./cartReducer"
 import { productReducer } from "./productReducer";
 import { checkoutReducer } from "./checkoutReducer";
+import { orderReducer } from "./orderReducer";
 
 const rootReducer = combineReducers({
-    search: searchReducer,
     cart: cartReducer,
-    header: headerReducer,
     product: productReducer,
-    checkout:checkoutReducer
+    checkout:checkoutReducer,
+    order: orderReducer
   });
   
 export default rootReducer;

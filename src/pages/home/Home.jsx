@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingCard from "../components/cards/LoadingCard";
-import ProductCard from "../components/cards/ProductCard";
-import { getProducts } from "../functions/product";
+import LoadingCard from "../../components/cards/LoadingCard";
+import ProductCard from "../../components/cards/product-cart/ProductCard";
+import { getProducts } from "../../functions/product";
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
-
-const maincontainer = {
-    display:'flex',
-    justifyContent:'center',
-    flexDirection:'column',
-    alignItems:'center',
-    marginTop:'2rem',
-    boxShadow:'none'
-}
+import './home.scss'
 
 const Home = () => {
 
@@ -28,12 +20,11 @@ const Home = () => {
         if(product){
             setProducts(product.data.amiibo);
             setLoading(false);
-        }else{
+        } else {
             setLoading(false);
             loadAllProducts();
         }
-           
-    },[]);
+    },[])
     
     const loadAllProducts = () => {
         setLoading(true);
@@ -48,7 +39,7 @@ const Home = () => {
     };
 
     return (
-        <Card className="cardroot" sx={maincontainer}>
+        <Card className="main-container">
             { loading ? (
                 <LoadingCard count={3} />
             ) : (
@@ -62,6 +53,6 @@ const Home = () => {
             )}
        </Card>
     )
-};
+}
 
 export default Home;

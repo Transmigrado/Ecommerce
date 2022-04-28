@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { validateEmail } from '../../functions/validateEmail'
-import { toast } from "react-toastify";
-import _ from "lodash";
 import "react-quill/dist/quill.snow.css";
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import _ from "lodash";
 import "./checkout.scss"
 
 const defaultValue = () => {
@@ -21,6 +20,7 @@ const defaultValue = () => {
 }
 
 const Checkout = ({ history }) => {
+
     const [ products, setProducts ] = useState([]);
     const [ total, setTotal ] = useState(0);
     const [ formData, setFormData ] = useState(defaultValue())
@@ -29,8 +29,8 @@ const Checkout = ({ history }) => {
     const dispatch = useDispatch();
     const { cart } = useSelector((state) => ({ ...state }));
     const { checkout } = useSelector((state) => ({ ...state }));
-    const [ checking, setChecking ] = useState(true)
 
+    const [ checking, setChecking ] = useState(true)
     const [ name, setName] = useState()
     const [ phone, setPhone ] = useState()
     const [ email, setEmail ] = useState()
@@ -90,13 +90,11 @@ const Checkout = ({ history }) => {
         } else if (!validateEmail(formData.email)) {
             error.email = true;
         } else {
-
             let checkoutInfo = {
                 comprador:formData,
                 products: products
             }
             let checkout = [];
-
             if (typeof window !== "undefined") {
                 if (localStorage.getItem("checkout")) {
                     checkout = JSON.parse(localStorage.getItem("checkout"));
@@ -120,7 +118,6 @@ const Checkout = ({ history }) => {
                 }
             
                 let unique = _.uniqWith(checkout,_.isEqual);
-        
                 localStorage.setItem("checkout", JSON.stringify(unique));
                 
                 dispatch({
@@ -129,9 +126,8 @@ const Checkout = ({ history }) => {
                 });
                 thenEndpointAction()
             }
-            
         }
-            setFormError(error)
+        setFormError(error)
     }
 
     const showProductSummary = () =>
@@ -145,58 +141,51 @@ const Checkout = ({ history }) => {
         ));
 
     if(checking) return null
+
     return (
         <Box className="main-payment-container">
             <Card className="checkout-container">
-                
                 <Grid container spacing={4} padding={5} >
                     <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <h4>Datos del comprador</h4>
+                        <h4>Datos del comprador</h4>
                         <hr />
-                    <Box sx={{'& > :not(style)': {  width: '100%' },}}>
-                        <TextField
-                            defaultValue={ name ? name : ""}
-                            error={formError.name ? true : false } 
-                            id="standard-basic" 
-                            label="Nombre" 
-                            variant="standard" 
-                            onChange={(e) => setFormData({... formData, name: e.target.value})}
-                        />
-                        <TextField
-                            defaultValue={ phone ? phone : ""}
-                            error={formError.phone ? true : false }
-                            id="standard-basic" 
-                            label="Teléfono" 
-                            variant="standard" 
-                            onChange={(e) => setFormData({... formData, phone: e.target.value})}
-                        />
-
-                        <TextField
-                            defaultValue={ email ? email : ""}
-                            error={formError.email ? true : false } 
-                            id="standard-basic" 
-                            label="Correo" 
-                            variant="standard" 
-                            onChange={(e) => setFormData({... formData, email: e.target.value})}
-                        />
-
-                        <TextField
-                            defaultValue={ address ? address : ""}
-                            error={formError.address ? true : false } 
-                            id="standard-basic" 
-                            label="Dirección de entrega" 
-                            variant="standard" 
-                            onChange={(e) => setFormData({... formData, address: e.target.value})}
-                        />
-                       
-                    </Box>
-                       
-                    <br/>
-                    <br/>
-                    <br/>
-                     
-                      
-                   
+                        <Box sx={{'& > :not(style)': {  width: '100%' },}}>
+                            <TextField
+                                defaultValue={ name ? name : ""}
+                                error={formError.name ? true : false } 
+                                id="standard-basic" 
+                                label="Nombre" 
+                                variant="standard" 
+                                onChange={(e) => setFormData({... formData, name: e.target.value})}
+                            />
+                            <TextField
+                                defaultValue={ phone ? phone : ""}
+                                error={formError.phone ? true : false }
+                                id="standard-basic" 
+                                label="Teléfono" 
+                                variant="standard" 
+                                onChange={(e) => setFormData({... formData, phone: e.target.value})}
+                            />
+                            <TextField
+                                defaultValue={ email ? email : ""}
+                                error={formError.email ? true : false } 
+                                id="standard-basic" 
+                                label="Correo" 
+                                variant="standard" 
+                                onChange={(e) => setFormData({... formData, email: e.target.value})}
+                            />
+                            <TextField
+                                defaultValue={ address ? address : ""}
+                                error={formError.address ? true : false } 
+                                id="standard-basic" 
+                                label="Dirección de entrega" 
+                                variant="standard" 
+                                onChange={(e) => setFormData({... formData, address: e.target.value})}
+                            />
+                        </Box>
+                        <br/>
+                        <br/>
+                        <br/>
                         <h4>Resumen del pedido</h4>
                         <hr />
                         <p>Products {products.length}</p>
@@ -206,7 +195,6 @@ const Checkout = ({ history }) => {
         
                         <p>Cart Total: {total}</p>
 
-
                         <Box className="btn-order-summary">
                             <Box className="box-btn-order">
                                 <Button
@@ -214,12 +202,10 @@ const Checkout = ({ history }) => {
                                     variant="contained"
                                     className="btn-order"
                                     disabled={!products.length}
-                                    //onClick={() => history.push("/payment")}
                                 >
                                     Realizar pedido
                                 </Button>
                             </Box>
-
                             <Box className="btn-empty-cart">
                                 <Button
                                     variant="contained"

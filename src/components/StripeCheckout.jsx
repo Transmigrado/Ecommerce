@@ -7,42 +7,54 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import _ from "lodash";
 
 
 const StripeCheckout = () => {
 
     const dispatch = useDispatch();
     const { checkout } = useSelector((state) => ({ ...state }));
-    console.log("checkout",checkout)
+  
     const [succeeded, setSucceeded] = useState(false);
     const [processing, setProcessing] = useState("");
  
     const getTotal = () =>
-    checkout[0].products.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
+        checkout[0].products.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
         
-    const handleSubmit = () => {
-      
+    const handleClickPayment = () => {
         setProcessing(true);
-      
+        let order = [];
+        if (typeof window !== "undefined") {
+            if (localStorage.getItem("order")) {
+              order = JSON.parse(localStorage.getItem("order"));
+              console.log("order",order)
+            }
+            order.push({
+              ...checkout,
+              count: 1,
+            });
+            let unique = _.uniqWith(order,_.isEqual);
+            localStorage.setItem("order", JSON.stringify(unique));
+            emptyCart()
+        }
+    }
 
-        // createOrder(payload, user.token).then((res) => {
-         
-            // empty cart from local storage
-            /*if (typeof window !== "undefined") localStorage.removeItem("cart");
-            // empty cart from redux
-            dispatch({
-                type: "ADD_TO_CART",
-                payload: [],
-            });*/
-        //});
-
-        // empty user cart from redux store and local storage
-        
-   
-        setProcessing(false);
-        setSucceeded(true);  
+    const emptyCart = () => {
+        // remove from local storage
+        if (typeof window !== "undefined") {
+            localStorage.removeItem("cart");
+            localStorage.removeItem("checkout");
+        }
+        // remove from redux
+        dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+        });
+        dispatch({
+            type: "ADD_TO_CHECKOUT",
+            payload: [],
+        });
     };
-
 
     return (
    
@@ -71,7 +83,7 @@ const StripeCheckout = () => {
        
           
         <Button
-            onClick={() => handleSubmit()}
+            onClick={() => handleClickPayment()}
             fullWidth="true"
             variant="contained"
             //disabled={processing || disabled || succeeded}

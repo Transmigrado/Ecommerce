@@ -33,9 +33,7 @@ const ProductCard = ({ product }) => {
     let finalPrice = multiple(price);
     product.finalPrice = finalPrice;
 
-
     const handleAddToCart = () => {
-        // create cart array
         let cart = [];
         if (typeof window !== "undefined") {
             // if cart is in local storage GET it
@@ -49,14 +47,11 @@ const ProductCard = ({ product }) => {
             });
             // remove duplicates
             let unique = _.uniqWith(cart,_.isEqual);
-        
             // save to local storage
-            // console.log('unique', unique)
             localStorage.setItem("cart", JSON.stringify(unique));
             // show tooltip
             setTooltip("Added");
-
-            // add to reeux state
+            // add to redux state
             dispatch({
                 type: "ADD_TO_CART",
                 payload: unique,
@@ -69,32 +64,6 @@ const ProductCard = ({ product }) => {
         }
     };
 
-          {/*<Card
-        cover={
-          <img
-            alt="prod-image"
-            src={image && image.length ? image[0].url : null}
-            style={{ height: "150px", objectFit: "cover" }}
-            className="p-1"
-          />
-        }
-        actions={[
-          
-          <Tooltip amiiboSeries={tooltip}>
-            <a onClick={handleAddToCart} disabled={product.quantity < 1}>
-              {<ShoppingCartOutlined className="text-danger" />} <br />
-              {product.quantity < 1 ? "Out of stock" : "Add to Cart"}
-            </a>
-          </Tooltip>,
-        ]}
-      >
-        <Meta
-          
-          gameSeries={`${gameSeries && gameSeries.substring(0, 40)}...`}
-        />
-      </Card>*/}
-
-    // destructure
     const { image, name, gameSeries, tail } = product;
   
     return (

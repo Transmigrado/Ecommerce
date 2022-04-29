@@ -1,6 +1,5 @@
 import React from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import StripeCheckout from "../../components/StripeCheckout";
+import StripeCheckout from "../../components/striper-checkout/StripeCheckout";
 import Typography from '@mui/material/Typography';
 import "./stripe.scss";
 

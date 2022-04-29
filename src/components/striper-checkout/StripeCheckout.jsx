@@ -8,6 +8,8 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import _ from "lodash";
+import './striper-checkout.scss'
+
 
 
 const StripeCheckout = () => {
@@ -86,8 +88,9 @@ const StripeCheckout = () => {
             fullWidth="true"
             variant="contained"
             disabled={!checkout.length}
+            className="btn-pagar"
         >
-            <span id="button-text">
+            <span>
                 {processing ? <div className="spinner" id="spinner"></div> : "Pagar"}
             </span>
         </Button>

@@ -14,6 +14,7 @@ import CardMedia from '@mui/material/CardMedia';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
+import './product-card-checkout.scss'
 
 const ProductCardInCheckout = ({ p }) => {
 
@@ -31,44 +32,39 @@ const ProductCardInCheckout = ({ p }) => {
             if (localStorage.getItem("cart")) {
                 cart = JSON.parse(localStorage.getItem("cart"));
             }
-
             cart.map((product, i) => {
                 if (product.tail === p.tail) {
                     cart[i].count = count;
                 }
                 return cart;
-            });
-
+            })
             localStorage.setItem("cart", JSON.stringify(cart));
             dispatch({
                 type: "ADD_TO_CART",
                 payload: cart,
-            });
+            })
         }
-    };
+    }
 
     const handleRemove = () => {
-
         let cart = [];
         if (typeof window !== "undefined") {
             if (localStorage.getItem("cart")) {
                 cart = JSON.parse(localStorage.getItem("cart"));
             }
-            // [1,2,3,4,5]
             cart.map((product, i) => {
                 if (product.tail === p.tail) {
                     cart.splice(i, 1);
                 }
                 return cart;
             });
-
             localStorage.setItem("cart", JSON.stringify(cart));
             dispatch({
                 type: "ADD_TO_CART",
                 payload: cart,
             });
         }
-  };
+    }
 
     return (
         <Card className="main-container-products-cart"> 

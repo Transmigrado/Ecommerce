@@ -200,7 +200,7 @@ const Checkout = ({ history }) => {
                                 <Button
                                     onClick={ () => handleOrder()}
                                     variant="contained"
-                                    className="btn-order"
+                                    className="btn-order-button"
                                     disabled={!products.length}
                                 >
                                     Realizar pedido

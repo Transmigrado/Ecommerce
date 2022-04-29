@@ -64,7 +64,7 @@ const ProductCard = ({ product }) => {
         }
     };
 
-    const { image, name, gameSeries, tail } = product;
+    const { image, name, tail } = product;
   
     return (
         <Card className="product-card">
@@ -77,20 +77,20 @@ const ProductCard = ({ product }) => {
                 image={image}
                 alt={name}
             />
-          <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                  {name}
-              </Typography>
-              <Box className="price-contender">
-                  <Typography component="div">
-                      <Box className="final-price">
-                        $ {product.finalPrice}
-                      </Box>
-                  </Typography>
-                  <Box className="add-to-cart-button" onClick={handleAddToCart}>
-                      <AddShoppingCartIcon />
-                  </Box>
-              </Box>        
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    {name}
+                </Typography>
+                <Box className="price-contender">
+                    <Typography component="div">
+                        <Box className="final-price">
+                            $ {product.finalPrice}
+                        </Box>
+                    </Typography>
+                    <Box className="add-to-cart-button" onClick={handleAddToCart}>
+                        <AddShoppingCartIcon />
+                    </Box>
+                </Box>        
           </CardContent>
 
     </Card>

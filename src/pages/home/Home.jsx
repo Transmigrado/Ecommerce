@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingCard from "../../components/cards/LoadingCard";
+import LoadingCard from "../../components/cards/loading-card/LoadingCard";
 import ProductCard from "../../components/cards/product-cart/ProductCard";
 import { getProducts } from "../../functions/product";
 import Card from '@mui/material/Card';
@@ -41,7 +41,7 @@ const Home = () => {
     return (
         <Card className="main-container">
             { loading ? (
-                <LoadingCard count={3} />
+                <LoadingCard count={12} />
             ) : (
                 <Grid container spacing={2} width="90%">
                     {products.map((product, index) => (

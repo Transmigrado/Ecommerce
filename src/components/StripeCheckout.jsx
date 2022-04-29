@@ -19,7 +19,7 @@ const StripeCheckout = () => {
     const [processing, setProcessing] = useState("");
  
     const getTotal = () =>
-        checkout[0].products.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
+        checkout[0]?.products.reduce((curr, next) => curr + next.count * next.finalPrice, 0);
         
     const handleClickPayment = () => {
         setProcessing(true);
@@ -27,7 +27,6 @@ const StripeCheckout = () => {
         if (typeof window !== "undefined") {
             if (localStorage.getItem("order")) {
               order = JSON.parse(localStorage.getItem("order"));
-              console.log("order",order)
             }
             order.push({
               ...checkout,
@@ -63,14 +62,14 @@ const StripeCheckout = () => {
         <Grid item xs={10} sm={10} md={8} lg={5}>
             <h4>Amiibo</h4>
             <hr />
-            <p>Nombre: {checkout[0].comprador.name} </p>
-            <p>Teléfono: {checkout[0].comprador.phone} </p>
-            <p>Correo: {checkout[0].comprador.email} </p>
-            <p>Dirección: {checkout[0].comprador.address} </p>
+            <p>Nombre: {checkout[0]?.comprador?.name} </p>
+            <p>Teléfono: {checkout[0]?.comprador?.phone} </p>
+            <p>Correo: {checkout[0]?.comprador?.email} </p>
+            <p>Dirección: {checkout[0]?.comprador?.address} </p>
             <hr />
             <p>Products</p>
 
-            {checkout[0].products.map((c, i) => (
+            {checkout[0]?.products?.map((c, i) => (
                 <Box key={i}>
                     <p>{c.name} x {c.count} = ${c.finalPrice * c.count}</p>
                 </Box>
@@ -86,7 +85,7 @@ const StripeCheckout = () => {
             onClick={() => handleClickPayment()}
             fullWidth="true"
             variant="contained"
-            //disabled={processing || disabled || succeeded}
+            disabled={!checkout.length}
         >
             <span id="button-text">
                 {processing ? <div className="spinner" id="spinner"></div> : "Pagar"}
@@ -96,8 +95,8 @@ const StripeCheckout = () => {
 
         <br />
         <p className={succeeded ? "result-message" : "result-message hidden"}>
-            Payment Successful.{" "}
-            <Link to="/history">See it in your purchase history.</Link>
+            Pago exitoso.{" "}
+            <Link to="/history">Ver en su historial de compras.</Link>
         </p>
         </Grid>
         </Grid>

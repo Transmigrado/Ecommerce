@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProductCardInCheckout from "../../components/cards/ProductCardInCheckout";
+import ProductCardInCheckout from "../../components/cards/product-cart-checkout/ProductCardInCheckout";
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -56,7 +56,7 @@ const Cart = ({ history }) => {
                           
                             <Button
                                 variant="contained"
-                                className="btn btn-sm btn-primary mt-2"
+                                className="btn-add-to-cart"
                                 disabled={!cart.length}
                                 onClick={thenEndpointAction}
                             >

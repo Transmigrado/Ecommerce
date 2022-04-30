@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { validateEmail } from '../../functions/validateEmail'
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -87,8 +88,10 @@ const Checkout = ({ history }) => {
             if(!formData.phone) error.phone = true;
             if(!formData.email) error.email = true;
             if(!formData.address) error.address = true;
+            toast.error("Debe completar la información solicitada.");
         } else if (!validateEmail(formData.email)) {
             error.email = true;
+            toast.error("Debe ingresar un correo válido.");
         } else {
             let checkoutInfo = {
                 comprador:formData,

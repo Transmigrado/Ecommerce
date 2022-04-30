@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { getProducts } from "../../functions/product";
 import LoadingCard from "../../components/cards/loading-card/LoadingCard";
 import ProductCard from "../../components/cards/product-cart/ProductCard";
-import { getProducts } from "../../functions/product";
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import './home.scss'
@@ -37,7 +37,7 @@ const Home = () => {
             setLoading(false);
         });
     };
-
+    
     return (
         <Card className="main-container">
             { loading ? (

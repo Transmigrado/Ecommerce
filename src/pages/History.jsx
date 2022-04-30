@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -50,12 +49,12 @@ const History = () => {
 
     return (
         <Card className="container-fluid">
-            <CardContent className="row">
+            <CardContent sx={{display:'flex',justifyContent:'center'}}>
                 <Box sx={{width:'650px'}}>
                     <h4>
                         { order.length > 0
-                            ? "User purchase orders"
-                            : "No purchase orders"}
+                            ? "Compras del usuario"
+                            : "Sin ordenes de compra"}
                     </h4>
                     {showEachOrders()}
                 </Box>

@@ -9,8 +9,6 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import './header.scss'
 
@@ -22,6 +20,7 @@ const Header = () => {
 
     const  handleClick = () =>  history.push("/")
     const  handleClickMenu = () => history.push("/cart")
+    const  handleClickHistory = () => history.push("/history")
 
     return (
 
@@ -76,11 +75,9 @@ const Header = () => {
                     </Typography>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                        <IconButton  sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                        </IconButton>
-                        </Tooltip>
+                        <Button className="button-link-menu" onClick={() => handleClickHistory()} >
+                           Mis compras
+                        </Button>
                     </Box>
                 </Toolbar>
             </Container>

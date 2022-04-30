@@ -9,6 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import { toast } from "react-toastify";
 import _ from "lodash";
 import './product-details.scss'
 
@@ -54,6 +55,7 @@ const ProductDetails = () => {
                 type: "SET_VISIBLE",
                 payload: true,
             });
+            toast.success("Agregado al carrito");
         }
     };
 

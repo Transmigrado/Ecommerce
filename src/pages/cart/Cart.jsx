@@ -34,7 +34,7 @@ const Cart = ({ history }) => {
                             <h4>Productos en el carro / {cart.length}</h4>
 
                             {!cart.length ? (
-                                <p> No products in cart. <Link to="/">Continue Shopping.</Link> </p>
+                                <p> No hay productos en el carrito. <Link to="/">Seguir comprando.</Link> </p>
                             ) : (
                                 showCartItems()
                             )}

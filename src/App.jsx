@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from '@mui/material/CircularProgress';
-import { errorBoundary } from "./helpers/errorBoundary";
 import Layout from "./layout/Layout";
 import { ErrorBoundary } from "react-error-boundary";
 

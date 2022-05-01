@@ -15,8 +15,7 @@ import rootReducer from "./reducers";
 // store
 const store = createStore(rootReducer, composeWithDevTools());
 
-ReactDOM.render(
-  //<React.StrictMode>
+ReactDOM.render( //<React.StrictMode>
   <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
@@ -24,6 +23,6 @@ ReactDOM.render(
       </React.StrictMode>
     </BrowserRouter>
   </Provider>,
-  //</React.StrictMode>,
+  
   document.getElementById("root")
 );

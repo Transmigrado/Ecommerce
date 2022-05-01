@@ -53,4 +53,4 @@ const App = () => {
 };
 
 // pattern design react: HOC
-export default errorBoundary(App);
+export default App

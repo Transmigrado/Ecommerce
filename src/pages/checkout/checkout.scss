@@ -1,0 +1,28 @@
+.main-payment-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}
+.checkout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 50%;
+    padding-bottom: 2rem;
+}
+.btn-show-address {
+    margin-top: 1rem;
+}
+.btn-order-summary {
+    display: flex;
+}
+.box-btn-order {
+    margin-right: 1rem;
+}
+.btn-order-button {
+  background: #000000 !important;
+}
+.btn-order-button:hover {
+    background: #00000096 !important;
+}

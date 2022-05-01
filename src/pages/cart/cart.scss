@@ -1,0 +1,23 @@
+.box-container {
+    display: flex;
+    justify-content: center;
+}
+.box-subcontainer{
+    padding-top: 2rem;
+    width: 90%;
+}
+.cart-items{
+    padding: 1rem;
+    background:#f3f3f3;
+}
+.order-summary-container {
+    padding: 1rem;
+    width: 100%;
+    background:#f3f3f3;
+}
+.btn-add-to-cart {
+    background: #000000 !important;
+}
+.btn-add-to-cart:hover {
+    background: #00000096 !important;
+}

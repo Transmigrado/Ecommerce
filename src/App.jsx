@@ -5,10 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from '@mui/material/CircularProgress';
 import { errorBoundary } from "./helpers/errorBoundary";
 import Layout from "./layout/Layout";
+import { ErrorBoundary } from "react-error-boundary";
 
 // lazy loading
 const Home = lazy(() => import("./pages/home/Home"));
-//const Header = lazy(() => import("./components/nav/Header"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
 const Checkout = lazy(() => import("./pages/checkout/Checkout"));
@@ -25,19 +25,30 @@ const App = () => {
         </div>
       }
     >
-      {/*<Header />*/}
-      <ToastContainer />
-      |<Layout>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/cart" component={Cart} />
-            <Route exact path="/checkout" component={Checkout} />
-            <Route exact path="/product-details/:id" component={ProductDetails} />
-            <Route exact path="/payment" component={Payment} />
-            <Route exact path="/history" component={History} />
-            <Route component={NotFound} />
-        </Switch>
-      </Layout> 
+        <ErrorBoundary
+          fallbackRender={({error, componentStack, resetErrorBoundary}) => (
+            <div role="alert">
+              <div>Something went wrong!!</div>
+              <pre>{error.message}</pre>
+              <button onClick={() => { resetErrorBoundary() }}>
+                Try again
+              </button>
+            </div>
+          )}
+        >  
+          <ToastContainer />
+          |<Layout>
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/cart" component={Cart} />
+                <Route exact path="/checkout" component={Checkout} />
+                <Route exact path="/product-details/:id" component={ProductDetails} />
+                <Route exact path="/payment" component={Payment} />
+                <Route exact path="/history" component={History} />
+                <Route component={NotFound} />
+            </Switch>
+          </Layout>
+        </ErrorBoundary> 
     </Suspense>
   );
 };

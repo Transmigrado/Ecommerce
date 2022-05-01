@@ -42,7 +42,7 @@ const History = () => {
     );
 
     const showEachOrders = () =>
-        order.map((order, i) => (
+        order?.map((order, i) => (
             <Box key={i} className="m-5 p-3 card" paddingTop={4}>
                 {showOrderInTable(order)}
             </Box>

@@ -45,10 +45,6 @@ const StripeCheckout = () => {
         }
         // remove from redux
         dispatch({
-            type: "ADD_TO_ORDER",
-            payload: [],
-        });
-        dispatch({
             type: "ADD_TO_CART",
             payload: [],
         });

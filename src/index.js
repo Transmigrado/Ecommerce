@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 // redux
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
 

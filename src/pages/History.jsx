@@ -1,3 +1,4 @@
+import React from 'react'
 import { useSelector } from "react-redux";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -41,7 +42,7 @@ const History = () => {
     );
 
     const showEachOrders = () =>
-        order.map((order, i) => (
+        order?.map((order, i) => (
             <Box key={i} className="m-5 p-3 card" paddingTop={4}>
                 {showOrderInTable(order)}
             </Box>

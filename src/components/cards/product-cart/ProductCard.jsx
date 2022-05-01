@@ -77,7 +77,7 @@ const ProductCard = ({ product }) => {
                 alt={name}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div" fontSize="1.2rem" >
                     {name}
                 </Typography>
                 <Box className="price-contender">

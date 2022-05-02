@@ -10,7 +10,7 @@
 
 1. En el directorio del proyecto ejecutar:
 
-yarn start.
+yarn install.
 
 2. Para correr el proyecto ejecutar:
 

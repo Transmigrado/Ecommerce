@@ -30,6 +30,8 @@ https://ecommerce-theta-seven.vercel.app/
 6. Configurado con webpack y babel.
 7. Implementación de redux para el store global.
 
+![home](https://i.ibb.co/dGDjH2j/home.jpg)
+
 ## Contributors ✨
 
 - Javier Ponte

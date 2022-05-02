@@ -30,16 +30,23 @@ https://ecommerce-theta-seven.vercel.app/
 6. Configurado con webpack y babel.
 7. Implementación de redux para el store global.
 
+Home
 ![home](https://i.ibb.co/dGDjH2j/home.jpg)
 
+Carrito
 ![cart](https://i.ibb.co/B381k21/cart.jpg)
 
+Checkout
 ![checkout](https://i.ibb.co/G7VBKBT/checkout.jpg)
 
+Pago
 ![payment](https://i.ibb.co/mzvZFfk/payment.jpg)
 
+Mis compras
+![history](https://i.ibb.co/WVkvVvH/history.jpg)
 
-
+Detalles 
+![details](https://i.ibb.co/vh9d1Cj/details.jpg)
 
 
 ## Contributors ✨

@@ -10,11 +10,11 @@
 
 1. En el directorio del proyecto ejecutar:
 
-yarn start.
+yarn install.
 
 2. Para correr el proyecto ejecutar:
 
-yarn run dev-server
+yarn run dev-server e ir a la ruta http://localhost:8080/ o la indicada en la consola.
 
 3. link demo en producción:  
 

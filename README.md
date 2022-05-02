@@ -32,6 +32,16 @@ https://ecommerce-theta-seven.vercel.app/
 
 ![home](https://i.ibb.co/dGDjH2j/home.jpg)
 
+![cart](https://i.ibb.co/B381k21/cart.jpg)
+
+![checkout](https://i.ibb.co/G7VBKBT/checkout.jpg)
+
+![payment](https://i.ibb.co/mzvZFfk/payment.jpg)
+
+
+
+
+
 ## Contributors ✨
 
 - Javier Ponte

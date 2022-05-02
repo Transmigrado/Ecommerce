@@ -20,17 +20,16 @@ yarn run dev-server
 
 https://ecommerce-theta-seven.vercel.app/
 
-4. # Detalles:
+## Detalles:
 
-1. proyecto creado con el comando npx create-react-app my-app.
+1. Proyecto creado con el comando npx create-react-app my-app.
 2. Configuración de buenas practicas de code splitting.
 3. Configuración error boundary.
 4. Configuración y optimización de carga perezosa lazy loading.
 5. Patrón de arquitectura flux.
-6. Implementación de redux para el store global.
+6. Configurado con webpack y babel.
+7. Implementación de redux para el store global.
 
 ## Contributors ✨
-
-Thanks goes to these wonderful people:
 
 - Javier Ponte
